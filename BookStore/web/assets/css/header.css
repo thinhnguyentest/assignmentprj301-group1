@@ -1,0 +1,47 @@
+.cart-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 25px;
+    height: 25px;
+
+    background: red;
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+#dropdown-menu{
+    position: fixed;
+    z-index: 2;
+    background-color: orange;
+}
+
+#dropdown-menu {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    box-shadow: #df9911;
+    z-index: 1;
+}
+.dropdown-toggle{
+    background-color: #df9911;
+}
+
+.dropdown {
+    margin-right: 40px;
+}
+
+.dropdown:hover #dropdown-menu {
+    display: block;
+}
+#search_input_wrapper {
+    display: none;
+}
+
+#search_input_wrapper.show {
+    display: block;
+}

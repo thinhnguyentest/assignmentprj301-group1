@@ -1,0 +1,12 @@
+- git fetch ( lấy tất cả code từ kho về)
+- git branch shoesStore-1.0
+code ...
+- git status
+- git add tenFile hoặc git add . nếu mún add all
+- git status
+- git commit -m'feature-person date'
+- git push origin HEAD:shoesStore-1.0
+* trường hợp lỗi:
+- git fetch
+- git rebase origin/shoesStore-1.0 (hợp)
+- git push origin HEAD:shoesStore-1.0 
