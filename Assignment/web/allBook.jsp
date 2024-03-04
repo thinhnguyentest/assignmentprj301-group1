@@ -240,7 +240,7 @@
 
                     </div>
                 </div>
-                <!--ALL CATEGORIERS -->
+<!--                ALL CATEGORIERS 
                 <div class="table-left ">
                     <div class="Price_categories">
                         <h2>PRICE RANGE</h2>
@@ -257,15 +257,9 @@
                             <a href="product">
                                 <li>300.000đ-500.000đ</li>
                             </a>
-                            <a href="product">
-                                <li>500.000đ-1.000.000đ</li>
-                            </a>
-                            <a href="product">
-                                <li>Trên 1.000.000đ</li>
-                            </a>
                         </ul>
                     </div>
-                </div>
+                </div>-->
             </div>
             <c:set var="books" value="${requestScope.books}" />
             <c:set var="count" value="0" />
@@ -287,14 +281,15 @@
                                     <div class="overlay">
                                         <div class="overlay-content">
 
-                                            <c:if test="${empty sessionScope.user}">
+                                            <c:if test="${empty sessionScope.login}">
                                                 <a href="login.jsp" class="btn buy-button">Buy</a>
                                             </c:if>
-                                            <c:if test="${not empty sessionScope.user}">
+                                            <c:if test="${not empty sessionScope.login}">
                                                 <a href="cart?action=buy&id=${book.id}&quantity=1" class="btn buy-button">Buy</a>
                                             </c:if>
 
-                                            <form action="detail" method="get">
+                                            <form action="product" method="get">
+                                                <input type="hidden" name="action" value="show">
                                                 <input type="hidden" name="bookId" value="${book.id}">
                                                 <button type="submit"
                                                         class="btn btn-primary view-details-btn">View

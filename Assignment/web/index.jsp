@@ -59,15 +59,16 @@
                         <div class="seemore_bt"><a href="product?action=newArrival">See More</a></div>
                         <div class="movies_main">
                             <div class="iamge_movies_main">
-                                <div class="iamge_movies" >
+                                <c:forEach var="book" items="${books}">
+                                <div class="iamge_movies">
                                     <div class="image_3">
-                                        <img src="assets/images/img-3.png" class="image" style="width:100%">
+                                        <img src="${book.image}" class="image" style="width:100%">
                                         <div class="middle">
-                                            <div class="playnow_bt">buy</div>
+                                            <div class="playnow_bt">Buy</div>
                                         </div>
                                     </div>
-                                    <h1 class="code_text">CADE Prlor</h1>
-                                    <p class="there_text" >There are many variations </p>
+                                    <h1 class="code_text">${book.title}</h1>
+                                    <p class="there_text">${book.price} VND</p>
                                     <div class="star_icon">
                                         <ul>
                                             <li><a href="#"><img src="assets/images/star-icon.png"></a></li>
@@ -78,12 +79,11 @@
                                         </ul>
                                     </div>
                                 </div>
+                            </c:forEach>  
                                 
                             </div>
                         </div>
                     </div>
-
-                    <div class="seebt_1"><a href="#">See More</a></div>
                 </div>
             </div>
             <!-- best books saler section end -->
@@ -162,11 +162,6 @@
         </div>
         <!-- footer  section end -->
         <!-- copyright section start -->
-        <div class="copyright_section">
-            <div class="container">
-                <div class="copyright_text">Copyright 2019 All Right Reserved By <a href="https://html.design">Free html Templates</a></div>
-            </div>
-        </div>
         <!-- copyright section end -->
         <!-- Javascript files-->
         <script src="js/jquery.min.js"></script>

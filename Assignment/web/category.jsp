@@ -191,34 +191,45 @@
                                     <a href="product?action=category&category=Genre&input=Fantasy">Fantasy</a></li>
                                 </li>
                             </ul>
-                        </div>                            
+                        </div>
                     </div>
                     <!--AUTHOR -->
                     <div class="table-left ">
                         <div class="list_categories">
                             <h2>AUTHOR</h2>
+
                             <ul>
-                                <li class="checkbox-container">
-                                    <span>
-                                        <input type="checkbox" id="author1Checkbox" name="myCheckbox">
-                                        <label for="author1Checkbox">author 1</label>
-                                    </span></li>
-                            </ul>
-                        </div>                            
+                            <c:set var="authors" value="${requestScope.authors}"></c:set>
+
+                            <c:forEach var="author" items="${authors}">
+                                <a href="product?action=category&category=AuthorId&input=${author.id}">
+                                    <li>${author.name}</li>
+                                </a>
+                            </c:forEach>
+                        </ul>
+
                     </div>
-                    <!--ALL CATEGORIERS -->
-                    <div class="table-left ">
-                        <div class="Price_categories">
-                            <h2>PRICE RANGE</h2>
-                            <ul>
-                                <a href="#">
-                                    <li class="checkbox-container"><span>
-                                            <input type="checkbox" id="author9Checkbox" name="myCheckbox">
-                                            <label for="author9Checkbox">author 1</label>
-                                        </span></li></a>
-                            </ul>
-                        </div>                            
+                </div>
+                    <!--                ALL CATEGORIERS 
+                <div class="table-left ">
+                    <div class="Price_categories">
+                        <h2>PRICE RANGE</h2>
+                        <ul>
+                            <a href="product">
+                                <li>Dưới 100.000đ</li>
+                            </a>
+                            <a href="product">
+                                <li>100.000đ-200.000đ</li>
+                            </a>
+                            <a href="product">
+                                <li>200.000đ-300.000đ</li>
+                            </a>
+                            <a href="product">
+                                <li>300.000đ-500.000đ</li>
+                            </a>
+                        </ul>
                     </div>
+                </div>-->
                     
                 </div >
             <c:set var="books" value="${requestScope.books}" />
@@ -238,9 +249,12 @@
                                     <div class="overlay">
                                         <div class="overlay-content">
                                             <a href="cart?action=buy&id=${book.id}&quantity=1" class=" btn buy-button">Buy</a>
-                                            <form action="detail" method="get">
+                                            <form action="product" method="get">
+                                                <input type="hidden" name="action" value="show">
                                                 <input type="hidden" name="bookId" value="${book.id}">
-                                                <button type="submit" class="btn btn-primary view-details-btn">View Details</button>
+                                                <button type="submit"
+                                                        class="btn btn-primary view-details-btn">View
+                                                    Details</button>
                                             </form>
                                         </div>
                                     </div>

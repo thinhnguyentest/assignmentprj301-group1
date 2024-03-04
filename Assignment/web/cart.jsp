@@ -93,7 +93,7 @@
 
 
                         <div class="back-to-shop">
-                            <a href="/product">&leftarrow;</a>
+                            <a href="${pageContext.request.contextPath}/product">&leftarrow;</a>
                             <span class="text-muted">Back to shop</span>
                         </div>
                     </div>

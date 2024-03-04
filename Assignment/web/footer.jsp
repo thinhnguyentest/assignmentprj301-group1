@@ -35,7 +35,6 @@
         
     </head>
     <body>
-        <
         <!-- footer  section start -->
         <footer class="footer_section layout_padding">
             <div class="container">
