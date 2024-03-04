@@ -10,16 +10,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link rel="stylesheet" href="account_assets/css/admin.css"/>
-
+        <title>Book manager</title>
     </head>
 
     <body>
         <section id="books">
-            <!-- Thêm một trường ẩn để lưu giá trị action -->
-            <input type="hidden" id="action">
-            <button onclick="showBookForm()">Thêm sách</button>
+            <a href="#bookForm"><button onclick="addBook()">Thêm sách</button></a>
             <h2>Danh sách sách</h2>
             <table>
                 <thead>
@@ -48,23 +44,34 @@
                             <td>${book.description}</td>
                             <td>${book.quantity}</td>
                             <td>${book.price}</td>
-                            <td><img src="assets/images/book/${book.image}" alt="Book Image" style="width: 120px"></td>
+                            <td><img src="${book.image}" alt="Book Image" style="width: 120px"></td>
+
                             <td>
-                                    <a href="#bookForm"><button onclick="editBook(${book.id})">Sửa</button></a>
-                                    <button onclick="deleteBook(${book.id})">Xóa</button>
-                                
-                                    <input type="text" id="authorName_${book.id}" value="${book.author.name}" hidden>
-                                    <input type="text" id="authorBirthday_${book.id}" value="${book.author.birthday}" hidden>
-                                    <input type="text" id="authorBio_${book.id}" value="${book.author.bio}" hidden>
-                                    <input type="text" id="publisherName_${book.id}" value="${book.publisher.publisherName}" hidden>
-                                    <input type="text" id="establishedDate_${book.id}" value="${book.publisher.dateEstablished}" hidden>
-                                    <input type="text" id="bookId_${book.id}" value="${book.id}" hidden>
-                                    <input type="text" id="bookTitle_${book.id}" value="${book.title}" hidden>
-                                    <input type="text" id="genre_${book.id}" value="${book.genre}" hidden>
-                                    <input type="text" id="description_${book.id}" value="${book.description}" hidden>
-                                    <input type="text" id="quantity_${book.id}" value="${book.quantity}" hidden> 
-                                    <input type="text" id="price_${book.id}" value="${book.price}" hidden>
-                                    <input type="text" id="image_${book.id}" value="${book.image}" hidden>
+                                <a href="#bookForm" style="padding: 20px;">
+                                    <button onclick="editBook(${book.id})">Sửa</button>
+                                </a>
+                                <form action="bookAdmin" style="box-shadow: none">
+                                    <input type="text" name="action" value="delete" hidden>
+                                    <input type="text" name="bookId" value="${book.id}" hidden><br>
+                                    <input type="text" name="authorId" value="${book.author.id}" hidden><br>
+                                    <input type="text" name="publisherId" value="${book.publisher.publisherId}" hidden><br>
+                                    <button onclick="parentNode.submit()">Xóa</button>
+                                </form>
+
+                                <input type="text" id="authorId_${book.id}" value="${book.author.id}" hidden>
+                                <input type="text" id="authorName_${book.id}" value="${book.author.name}" hidden>
+                                <input type="text" id="authorBirthday_${book.id}" value="${book.author.birthday}" hidden>
+                                <input type="text" id="authorBio_${book.id}" value="${book.author.bio}" hidden>
+                                <input type="text" id="publisherId_${book.id}" value="${book.publisher.publisherId}" hidden>
+                                <input type="text" id="publisherName_${book.id}" value="${book.publisher.publisherName}" hidden>
+                                <input type="text" id="establishedDate_${book.id}" value="${book.publisher.dateEstablished}" hidden>
+                                <input type="text" id="bookId_${book.id}" value="${book.id}" hidden>
+                                <input type="text" id="bookTitle_${book.id}" value="${book.title}" hidden>
+                                <input type="text" id="genre_${book.id}" value="${book.genre}" hidden>
+                                <input type="text" id="description_${book.id}" value="${book.description}" hidden>
+                                <input type="text" id="quantity_${book.id}" value="${book.quantity}" hidden> 
+                                <input type="text" id="price_${book.id}" value="${book.price}" hidden>
+                                <input type="text" id="image_${book.id}" value="${book.image}" hidden>
                             </td>
                         </tr>
                     </c:forEach>
@@ -79,19 +86,25 @@
                                 <input name="pageBook" value="${i}" hidden="">
                             </c:when>
                             <c:otherwise>
-                                <a href="?pageBook=${i}">${i}</a>
+                                <a href="?pageBook=${i}#books">${i}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                 </div>
             </c:if>
+
             <!-- Biểu mẫu thêm/sửa sách -->
             <div id="bookForm" style="display: none;">
                 <h3>Biểu mẫu Sách</h3>
-                <form action="book" method="post">
+                <form action="bookAdmin">
+                    <input type="text" name="action" id="action" >
                     <!--Author Information-->
                     <fieldset>
                         <legend>Author Information</legend>
+
+                        <label for="authorId">Id: </label>
+                        <input type="text" id="authorId" name="authorId" readonly=""><br>
+
                         <label for="authorName">Name:</label>
                         <input type="text" id="authorName" name="authorName" required><br>
 
@@ -105,6 +118,10 @@
                     <!-- Publisher Information -->
                     <fieldset>
                         <legend>Publisher Information</legend>
+
+                        <label for="publisherName">Id:</label>
+                        <input type="text" id="publisherId" name="publisherId" readonly=""><br>
+
                         <label for="publisherName">Name:</label>
                         <input type="text" id="publisherName" name="publisherName" required><br>
 
@@ -116,8 +133,11 @@
                     <fieldset>
                         <legend>Book Information</legend>
                         <label for="id">Id: </label>
-                        <input type="text" id="id" name="id" required disabled=""><br>
-                        
+                        <input type="text" id="bookId" name="bookId" required readonly=""><br>
+
+                        <label for="bookTitle">Title: </label>
+                        <input type="text" id="bookTitle" name="bookTitle" required><br>
+
                         <label for="genre">Genre:</label>
                         <input type="text" id="genre" name="genre" required><br>
 
@@ -128,18 +148,17 @@
                         <input type="text" id="quantity" name="quantity" required><br>
 
                         <label for="price">Price:</label>
-                        <input type="text" id="price" name="price" step="0.01" required><br>
+                        <input type="text" id="price" name="price" step="5000" required><br>
 
                         <label for="image">Select Image :</label>
-                        <input type="file" name="image" id="image" required>
+                        <input type="text" name="image" id="image" required>
                     </fieldset>
 
-                    <button type="button" onclick="saveBook()">Lưu</button>
-                    <button type="button" onclick="cancelBookForm()">Hủy</button>
+                    <button type="button" onclick="parentNode.submit()">Lưu</button>
+                    <a href="books"><button type="button" onclick="cancelBookForm()">Hủy</button></a>
                 </form>
             </div>
         </section>
     </body>
-    <script src="account_assets/js/main.js">
-    </script>
+    <script src="account_assets/js/main.js"></script>
 </html>

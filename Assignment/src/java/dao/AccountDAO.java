@@ -150,7 +150,18 @@ public class AccountDAO {
         e.printStackTrace();
     }
     return false;
-}
+}   
+    public static boolean deleteUser(User user) {
+        String SQL = "DELETE FROM Users WHERE UserId=?";
+        try ( Connection conn = DBcontext.getConnection()) {
+            try ( PreparedStatement preparedStatement = conn.prepareStatement(SQL)) {
+                preparedStatement.setInt(1, user.getId());
+                return preparedStatement.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
     public static void main(String[] args) {
 //        listUsers().forEach(p -> System.out.println(p));
 //        System.out.println(searchUser("admin1"));
