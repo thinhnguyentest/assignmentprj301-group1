@@ -215,7 +215,8 @@ public class BookDAO {
     }
     public static List<Book> getNewBooks(int top) {
         List<Book> list = new ArrayList<>();
-        String QUERY = "SELECT TOP (?) * FROM Books ORDER BY BookId DESC";
+        String QUERY = "SELECT TOP (?) * FROM Books INNER JOIN Publishers ON Books.PublisherId = Publishers.PublisherId ORDER BY DateEstablished DESC";
+
         try (Connection conn = DBcontext.getConnection()) {
             try (PreparedStatement pst = conn.prepareStatement(QUERY)) {
                 pst.setInt(1, top);
