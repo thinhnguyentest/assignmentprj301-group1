@@ -93,7 +93,7 @@
 
 
                         <div class="back-to-shop">
-                            <a href="${pageContext.request.contextPath}/product">&leftarrow;</a>
+                            <a href="product">&leftarrow;</a>
                             <span class="text-muted">Back to shop</span>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                             <div class="col text-right total-price">0 VND</div>
                         </div>
 
-                        <a href="${pageContext.request.contextPath}/checkout" class="btn btn-primary">CHECKOUT</a>
+                        <a href="checkout" class="btn btn-primary">CHECKOUT</a>
                     </div>
                 </div>
                 <!-- Footer Content -->

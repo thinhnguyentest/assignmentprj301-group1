@@ -203,23 +203,26 @@
 
             <div class="container-type-pay">
                 <p class="section-title"><i class="fa-brands fa-cc-paypal"></i> Thanh Toán</p>
-                <input type="text" id="phuong-thuc-thanh-toan-display">
+               
                 <select name="phuong-thuc-thanh-toan" id="phuong-thuc-thanh-toan-select" onchange="updatePaymentMethod()">
                     <option>Lựa Chọn</option>
                     <option value="Thanh toán khi nhận hàng">Thanh Toán Khi Nhận Hàng</option>
                     <option value="Chuyển Khoản Ngân Hàng">Chuyển Khoản Ngân Hàng</option>
                 </select>
                 <br> <br>
-                <input type="submit" value="Xác nhận thanh toán" class="xac-nhan-thanh-toan">
+                <form action="checkout" method="post">
+                    <input type="submit" value="Xác nhận thanh toán" class="xac-nhan-thanh-toan">
+                </form>
+                
             </div>
 
 
 
             <div class="container-cart">
 
-                <c:forEach var="cart" items="${sessionScope.carts}">
+                <c:forEach var="cart" items="${sessionScope.cart}">
                     <div class="order-details">
-                        <h1>Đơn hàng (${cart.cardId})</h1>
+
                         <p>Tên sách: ${cart.book.title}</p>
                         <p>Giá: ${cart.book.price}</p>
                         <p>Số lượng: ${cart.quantity}</p>
@@ -229,7 +232,7 @@
 
                 <div class="order-summary">
                     <h3 class="section-title"><i class="fa-solid fa-rectangle-list"></i> Tóm tắt đơn hàng</h3>
-                    <p>Tạm tính: ${sessionScope.cart.getTotal()}<input type="text" name="tong-tien" /></p>   
+                      
                     <!-- Thêm ô Phí vận chuyển -->
                     <p>Phí vận chuyển: <input type="text" id="phi-van-chuyen"  name="phi-van-chuyen" /></p>
                     <!-- Thêm ô Tổng cộng -->
