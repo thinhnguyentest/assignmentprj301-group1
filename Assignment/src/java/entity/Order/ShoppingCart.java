@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package entity.Order;
 
 import entity.Product.Book;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ShoppingCart {
@@ -19,8 +15,8 @@ public class ShoppingCart {
 
     public void addItem(Book book, int quantity) {
         // Check if book already exists in cart 
-        for(CartItem item : items) {
-            if(item.getBook().getId() == book.getId()) {
+        for (CartItem item : items) {
+            if (item.getBook().getId() == book.getId()) {
                 item.setQuantity(item.getQuantity() + quantity);
                 return;
             }
@@ -31,24 +27,47 @@ public class ShoppingCart {
     }
 
     public void removeItem(int bookId) {
-        for(CartItem item : items) {
-            if(item.getBook().getId() == bookId) {
-                items.remove(item);
-                return; 
+        Iterator<CartItem> iterator = items.iterator();
+        while (iterator.hasNext()) {
+            CartItem item = iterator.next();
+            if (item.getBook().getId() == bookId) {
+                iterator.remove();
+                return;
             }
         }
     }
 
+    public void updateQuantity(int bookId, int newQuantity) {
+        for (CartItem item : items) {
+            if (item.getBook().getId() == bookId) {
+                item.setQuantity(newQuantity);
+                return;
+            }
+        }
+    }
+
+    public void clear() {
+        items.clear();
+    }
+
     public float getTotal() {
         float total = 0;
-        for(CartItem item : items) {
+        for (CartItem item : items) {
             Book book = item.getBook();
             total += book.getPrice() * item.getQuantity();
         }
         return total;
     }
 
+    public int getTotalQuantity() {
+        int totalQuantity = 0;
+        for (CartItem item : items) {
+            totalQuantity += item.getQuantity();
+        }
+        return totalQuantity;
+    }
+
     public List<CartItem> getItems() {
-        return items; 
+        return items;
     }
 }

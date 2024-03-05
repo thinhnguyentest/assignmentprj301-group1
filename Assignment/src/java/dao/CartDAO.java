@@ -1,8 +1,11 @@
 package dao;
 
+import context.DBcontext;
 import static context.DBcontext.getConnection;
 import java.sql.SQLException;
 import entity.Order.Bill;
+import entity.Order.Cart;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -12,10 +15,22 @@ import java.time.LocalDateTime;
  */
 public class CartDAO {
 
-    public void addBill(Bill hd) {
-     
-        String SQL = "insert into OrderDetails(OrderId, BookId , Quantity ,Price ) values(?,?,?,?) ";
-
+    public static boolean addCart(Cart cart) {
+        String QUERY = "INSERT INTO Carts (UserId, BookId, Quantity) "
+                + "VALUES (?,?,?)";
+        try (Connection conn = DBcontext.getConnection()) {
+            try (PreparedStatement pst = conn.prepareStatement(QUERY)) {
+                pst.setInt(1, cart.getUser().getId());
+                pst.setInt(2, cart.getBook().getId());
+                pst.setInt(2, cart.getQuantity());
+                return pst.execute();
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+    public void addBill(Bill hd){
+        String SQL = "insert into OrderDetails(OrderId, BookId, Quantity, Price) values(?,?,?,?)";
         try {
             PreparedStatement st = getConnection().prepareStatement(SQL);
             st.setInt(1, hd.getMaHD());
@@ -24,16 +39,23 @@ public class CartDAO {
             st.setDouble(4, hd.getPrice());
             st.executeUpdate();
             
-           getConnection().close();
-        }catch(SQLException e){
+            updateBookQuantity(hd.getBookId(), hd.getQuantity());
+            getConnection().close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        CartDAO dao = new CartDAO();
-        Bill h = new Bill(1, 3, 5, 0, 24, "Credit Card", Timestamp.valueOf(LocalDateTime.now()));
-        dao.addBill(h);
-        System.out.println(h);
+     private void updateBookQuantity(int bookId, int quantityPurchased) {
+        String SQL = "UPDATE Books SET Quantity = Quantity - ? WHERE BookId = ?";
+        try {
+            // Cập nhật số lượng sách
+            PreparedStatement st = getConnection().prepareStatement(SQL);
+            st.setInt(1, quantityPurchased);
+            st.setInt(2, bookId);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 }
-    

@@ -1,6 +1,8 @@
 // This servlet is used to handle the checkout process. It will get the cart from the session and display the cart items to the user.
 package control;
 
+import dao.OrderDAO;
+import entity.Account.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -46,8 +49,15 @@ public class CheckOutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Lấy thông tin giỏ hàng từ session
         HttpSession session = request.getSession();
-        Cart cart = (Cart) session.getAttribute("cart");
+        User user = (User) session.getAttribute("login");
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        // Thêm thông tin đơn hàng vào database ở đây
+        OrderDAO.addOrder(user, cart);
+        // Chuyển hướng người dùng về trang chủ sau khi thanh toán
+        session.removeAttribute("cart");
+        response.sendRedirect("home");
     }
 
     @Override
